@@ -32,11 +32,11 @@
     {
         "name": "ToolHead (usb-Klipper_stm32f103xe_52FF6F067167485706321687-if00)",
         "id": "/dev/serial/by-id/usb-Klipper_stm32f103xe_52FF6F067167485706321687-if00",
-        "profile": "",
+        "profile": "thb_mcu",
         "method": "serial",
         "interface": "can0",
         "notes": "",
-        "is_katapult": false,
+        "is_katapult": true,
         "is_bridge": false,
         "dfu_id": null,
         "magic_baud_tested": false,
