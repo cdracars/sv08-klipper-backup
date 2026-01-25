@@ -6,7 +6,7 @@
         "method": "serial",
         "interface": "can0",
         "notes": "",
-        "is_katapult": false,
+        "is_katapult": true,
         "is_bridge": false,
         "dfu_id": null,
         "magic_baud_tested": false,
