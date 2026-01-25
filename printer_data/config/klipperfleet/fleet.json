@@ -13,5 +13,20 @@
         "use_magic_baud": false,
         "dfu_exit_tested": false,
         "use_dfu_exit": false
+    },
+    {
+        "name": "Mainboard (usb-Klipper_stm32f103xe_30FFDA053347543030741651-if00)",
+        "id": "/dev/serial/by-id/usb-Klipper_stm32f103xe_30FFDA053347543030741651-if00",
+        "profile": "",
+        "method": "serial",
+        "interface": "can0",
+        "notes": "",
+        "is_katapult": false,
+        "is_bridge": false,
+        "dfu_id": null,
+        "magic_baud_tested": false,
+        "use_magic_baud": false,
+        "dfu_exit_tested": false,
+        "use_dfu_exit": false
     }
 ]
