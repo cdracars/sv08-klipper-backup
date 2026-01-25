@@ -2,7 +2,7 @@
     {
         "name": "Klipper Expander (usb-Klipper_stm32f042x6_0D003A001653304B4D323431-if00)",
         "id": "/dev/serial/by-id/usb-Klipper_stm32f042x6_0D003A001653304B4D323431-if00",
-        "profile": "",
+        "profile": "klipper_expander_mcu",
         "method": "serial",
         "interface": "can0",
         "notes": "",
