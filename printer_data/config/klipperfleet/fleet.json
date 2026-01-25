@@ -28,5 +28,20 @@
         "use_magic_baud": false,
         "dfu_exit_tested": false,
         "use_dfu_exit": false
+    },
+    {
+        "name": "ToolHead (usb-Klipper_stm32f103xe_52FF6F067167485706321687-if00)",
+        "id": "/dev/serial/by-id/usb-Klipper_stm32f103xe_52FF6F067167485706321687-if00",
+        "profile": "",
+        "method": "serial",
+        "interface": "can0",
+        "notes": "",
+        "is_katapult": false,
+        "is_bridge": false,
+        "dfu_id": null,
+        "magic_baud_tested": false,
+        "use_magic_baud": false,
+        "dfu_exit_tested": false,
+        "use_dfu_exit": false
     }
 ]
