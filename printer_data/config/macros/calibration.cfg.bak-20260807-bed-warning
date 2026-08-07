@@ -21,7 +21,7 @@ gcode:
         {% set mesh_calibrate_temp = current_target_temp %}
     {% endif %}
     
-    {% if printer.heater_bed.temperature < (mesh_calibrate_temp - 0.5) %}
+    {% if printer.heater_bed.temperature != mesh_calibrate_temp %}
         M140 S{mesh_calibrate_temp}
         {action_respond_info("The bed target temperature was not reached!")}
         {action_respond_info("Bed heating...")}
@@ -51,7 +51,7 @@ gcode:
         {% set mesh_calibrate_temp = current_target_temp %}
     {% endif %}
     
-    {% if printer.heater_bed.temperature < (mesh_calibrate_temp - 0.5) %}
+    {% if printer.heater_bed.temperature != mesh_calibrate_temp %}
         M140 S{mesh_calibrate_temp}
         {action_respond_info("The bed target temperature was not reached!")}
         {action_respond_info("Bed heating...")}
