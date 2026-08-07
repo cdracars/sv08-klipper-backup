@@ -111,7 +111,6 @@ gcode:
   G0 Z5 F1000 ; 5 up zhop
   {% if not rawparams or 'X' in rawparams %}
     {action_respond_info('Homing X')}
-    G4 P2000 ; let the X sensorless driver settle before homing
     G28 X
     G90 ; set absolute positioning
     G0 X177.5 F6000 ; return to center
@@ -194,7 +193,7 @@ endstop_pin: tmc2209_stepper_x: virtual_endstop
 position_min: 0               
 position_endstop: 355         
 position_max: 355             
-homing_speed: 40
+homing_speed: 30              
 homing_retract_dist: 0        
 homing_positive_dir: True     
 #--------------------------------------------------------------------
@@ -202,7 +201,7 @@ homing_positive_dir: True
 uart_pin: PE1
 interpolate: True             
 run_current: 1.5              
-
+hold_current: 1.5             
 sense_resistor: 0.150         
 stealthchop_threshold: 0      
 uart_address:3
