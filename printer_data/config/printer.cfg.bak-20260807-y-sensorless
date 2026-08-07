@@ -118,7 +118,6 @@ gcode:
   {% endif %}
     {% if not rawparams or 'Y' in rawparams %}
     {action_respond_info('Homing Y')}
-    G4 P2000 ; let the Y sensorless driver settle before homing
     G28 Y
     G90 ; set absolute positioning
     G0 Y177.5 F6000 ; return to center
