@@ -219,7 +219,7 @@ endstop_pin: tmc2209_stepper_y: virtual_endstop
 position_min: 0               
 position_endstop: 364         
 position_max: 364            
-homing_speed: 20
+homing_speed: 30              
 homing_retract_dist: 0        
 homing_positive_dir: true     
 #--------------------------------------------------------------------
@@ -227,7 +227,7 @@ homing_positive_dir: true
 uart_pin: PB7
 interpolate: True             
 run_current: 1.5              
-
+hold_current: 1.5             
 sense_resistor: 0.150         
 stealthchop_threshold: 0      
 uart_address:3
