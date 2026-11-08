@@ -1,0 +1,129 @@
+#--------------------------------------------------------------------#
+# CALIBRATION
+# QUAD_GANTRY_LEVEL, BED_MESH_CALIBRATE, PROBE_CALIBRATE, G34
+#--------------------------------------------------------------------#
+
+[delayed_gcode bed_mesh_init]
+initial_duration: .01
+gcode:
+    BED_MESH_PROFILE LOAD=default
+
+
+[gcode_macro QUAD_GANTRY_LEVEL]
+rename_existing: QUAD_GANTRY_LEVEL_BASE
+gcode:
+    {% set mesh_calibrate_temp = printer['gcode_macro _global_var'].bed_mesh_calibrate_target_temp|int %}
+    {% set current_target_temp = printer.heater_bed.target|int %}
+
+    {action_respond_info("Check Heating!")}
+    # Only use the calibration temp if no temperature is currently set
+    {% if current_target_temp > 0 %}
+        {% set mesh_calibrate_temp = current_target_temp %}
+    {% endif %}
+    
+    {% if printer.heater_bed.temperature != mesh_calibrate_temp %}
+        M140 S{mesh_calibrate_temp}
+        {action_respond_info("The bed target temperature was not reached!")}
+        {action_respond_info("Bed heating...")}
+        M190 S{mesh_calibrate_temp}
+    {% endif %}
+
+    # {% if printer.toolhead.homed_axes|lower != "xyz" %}
+    #     G28
+    # {% endif %}
+
+    QUAD_GANTRY_LEVEL_BASE
+
+    {% if current_target_temp == 0 %}
+        M140 S0
+    {% endif %}
+
+
+[gcode_macro BED_MESH_CALIBRATE]
+rename_existing: BED_MESH_CALIBRATE_BASE
+gcode:
+    {% set mesh_calibrate_temp = printer['gcode_macro _global_var'].bed_mesh_calibrate_target_temp|int %}
+    {% set current_target_temp = printer.heater_bed.target|int %}
+
+    {action_respond_info("Check Heating!")}
+    # Only use the calibration temp if no temperature is currently set
+    {% if current_target_temp > 0 %}
+        {% set mesh_calibrate_temp = current_target_temp %}
+    {% endif %}
+    
+    {% if printer.heater_bed.temperature != mesh_calibrate_temp %}
+        M140 S{mesh_calibrate_temp}
+        {action_respond_info("The bed target temperature was not reached!")}
+        {action_respond_info("Bed heating...")}
+        M190 S{mesh_calibrate_temp}
+    {% endif %}
+
+    # {% if printer.toolhead.homed_axes|lower != "xyz" %}
+    #     G28
+    # {% endif %}
+
+    BED_MESH_CLEAR
+    BED_MESH_CALIBRATE_BASE ADAPTIVE=1
+
+    {% if current_target_temp == 0 %}
+        M140 S0  
+    {% endif %}
+
+
+# [gcode_macro PROBE_CALIBRATE]
+# rename_existing: PROBE_CALIBRATE_BASE
+# gcode:
+#     {% set current_target_temp  = printer.heater_bed.target|int %}
+#     {% set z_offset_calibrate_temp = printer['gcode_macro _global_var'].bed_mesh_calibrate_target_temp|int %}
+
+#     {action_respond_info("z_offset_calibrate")}
+#     {% if printer.heater_bed.temperature != z_offset_calibrate_temp %}
+#         M140 S{z_offset_calibrate_temp}
+#         {action_respond_info("The bed target temperature was not reached!")}
+#         {action_respond_info("Bed heating...")}
+#         M190 S{z_offset_calibrate_temp}
+#     {% endif %}
+
+#     G28
+#     PROBE_CALIBRATE_BASE
+#     TESTZ z=-4
+
+
+[gcode_macro G34]
+gcode:
+    BED_MESH_CLEAR 
+    {% if printer.toolhead.homed_axes|lower != "xyz" %}
+      G28
+    {% else %}
+      G28 Z
+    {% endif %}
+    QUAD_GANTRY_LEVEL 
+    G28 Z 
+    G0 X175 Y175 Z30 F3600
+
+
+[gcode_macro _CALIBRATION_ZOFFSET]
+gcode:
+    M117 Calibrate Offset
+    QUAD_GANTRY_LEVEL
+    M140 S65
+    G4 P500
+    CLEAN_NOZZLE
+    G4 P500
+    M117 Z-offset calibration
+    Z_OFFSET_CALIBRATION
+    Z_OFFSET_APPLY_PROBE
+    M400
+    G4 P3000
+    SAVE_CONFIG 
+
+
+[delayed_gcode _auto_zoffset]
+gcode:
+    SAVE_VARIABLE VARIABLE=offsetadjust VALUE={'%05.2f' % (0)}
+    _CALIBRATION_ZOFFSET
+
+
+[gcode_macro _Delay_Calibrate]
+gcode:
+    UPDATE_DELAYED_GCODE ID=_auto_zoffset DURATION=1.0
